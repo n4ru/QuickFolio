@@ -1,9 +1,7 @@
 // Quickfolio
 const fluidb = require('fluidb');
-var db = new fluidb();
+var db = new fluidb('coins');
 const request = require('request');
-
-let coins = Object.keys(db.portfolio);
 
 getPrices = (coins) => {
     request('https://bittrex.com/Api/v2.0/pub/currencies/GetBTCPrice', function(error, response, body) {
@@ -81,5 +79,17 @@ getPrices = (coins) => {
     })
 }
 
-
-getPrices(coins);
+if (JSON.stringify(db) == "{}") {
+    db.portfolio = {
+        "BTC": {
+            "qty": 0
+        },
+        "LTC": {
+            "qty": 0
+        }
+    }
+    console.log("No coins were found. Please check and edit the coins.json file to add coins to your portfolio.")
+} else {
+    let coins = Object.keys(db.portfolio);
+    getPrices(coins);
+}
