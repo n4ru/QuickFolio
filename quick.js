@@ -43,6 +43,7 @@ getPrices = (coins) => {
                     btcValue += parseFloat(values.qty);
                 } else {
                     btcValue += values.qty * values.last;
+                    values.btcQty = values.qty * values.last;
                 }
             })
             values.sort(function(a, b) {
@@ -53,21 +54,24 @@ getPrices = (coins) => {
             }).forEach(values => {
                 if (values.name == "BTC") {
                     if (process.argv[2] == "full" || process.argv[2] == "full-hide") {
-                        console.log("BTC Price: $" + values.usd + "\n----------");
+                        console.log("BTC / Price: $" + values.usd.toFixed(2) + " / Holdings: " + (values.qty / btcValue * 100).toFixed(2) + "%\n----------");
                     }
-                    usdValue += (values.qty * values.usd);
-                    btcValue += parseFloat(values.qty);
                 } else {
                     if (process.argv[2] == "full" || process.argv[2] == "full-hide") {
-                        console.log(values.name + " / Price: " + values.last + " / 24H Change: " + values.change + "%")
+                        if ((values.btcQty / btcValue * 100).toFixed(2) < 10) {
+                            console.log(values.name + " / Price: " + values.last + " / Holdings: 0" + (values.btcQty / btcValue * 100).toFixed(2) + "% / 24H Change: " + values.change + "%")
+
+                        } else {
+                            console.log(values.name + " / Price: " + values.last + " / Holdings: " + (values.btcQty / btcValue * 100).toFixed(2) + "% / 24H Change: " + values.change + "%")
+                        }
                     }
-                    usdValue += (values.qty * values.usd);
-                    btcValue += values.qty * values.last;
                 }
             })
             values.forEach(values => {
-                allChange += (values.change * (values.qty * values.last));
-            })
+                if (values.name != "BTC") {
+                    allChange += (values.change * (values.btcQty / btcValue));
+                }
+            });
             if (process.argv[2] == "full-hide") {
                 console.log("Portfolio Value: HIDDEN / Change: " + (allChange / btcValue).toFixed(2) + "%");
             } else {
