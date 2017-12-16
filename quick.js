@@ -37,6 +37,14 @@ getPrices = (coins) => {
             let usdValue = 0;
             let btcValue = 0;
             let allChange = 0;
+            values.forEach(values => {
+                usdValue += (values.qty * values.usd);
+                if (values.name == "BTC") {
+                    btcValue += parseFloat(values.qty);
+                } else {
+                    btcValue += values.qty * values.last;
+                }
+            })
             values.sort(function(a, b) {
                 // Compare the 2 dates
                 if (a.usd * a.qty > b.usd * b.qty) return -1;
@@ -44,21 +52,27 @@ getPrices = (coins) => {
                 return 0;
             }).forEach(values => {
                 if (values.name == "BTC") {
-                    if (process.argv[2] == "full") {
+                    if (process.argv[2] == "full" || process.argv[2] == "full-hide") {
                         console.log("BTC Price: $" + values.usd + "\n----------");
                     }
                     usdValue += (values.qty * values.usd);
                     btcValue += parseFloat(values.qty);
                 } else {
-                    if (process.argv[2] == "full") {
+                    if (process.argv[2] == "full" || process.argv[2] == "full-hide") {
                         console.log(values.name + " / Price: " + values.last + " / 24H Change: " + values.change + "%")
                     }
                     usdValue += (values.qty * values.usd);
                     btcValue += values.qty * values.last;
-                    allChange += (values.change * (values.qty * values.last));
                 }
             })
-            console.log("Portfolio Value: " + btcValue.toFixed(8) + " BTC / $" + (usdValue / 1000).toFixed(2) + "K" + " / Change: " + (allChange / btcValue).toFixed(2) + "%");
+            values.forEach(values => {
+                allChange += (values.change * (values.qty * values.last));
+            })
+            if (process.argv[2] == "full-hide") {
+                console.log("Portfolio Value: HIDDEN / Change: " + (allChange / btcValue).toFixed(2) + "%");
+            } else {
+                console.log("Portfolio Value: " + btcValue.toFixed(8) + " BTC / $" + (usdValue / 1000).toFixed(2) + "K" + " / Change: " + (allChange / btcValue).toFixed(2) + "%");
+            }
         })
     })
 }
