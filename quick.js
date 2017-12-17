@@ -55,46 +55,40 @@ getPrices = (coins) => {
                     if (b.usd * b.qty > a.usd * a.qty) return 1;
                     return 0;
                 }).forEach(values => {
-                    values.change = Number(values.change).toFixed(2)
+                    values.change = Number(values.change).toFixed(2);
                     let changeColor = null;
-                    if (values.change > 0) {
-                        values.change = "+" + values.change
-                    } else {}
-                    if (Math.abs(values.change < 10)) {
-                        values.change = values.change.toString()[0] + "0" + Math.abs(values.change).toFixed(2)
-                    }
+                    if (Math.abs(values.change) < 10)
+                        values.change = "0" + Math.abs(values.change).toFixed(2);
+                    if (values.change > 0)
+                        values.change = "+" + values.change;
                     values.change += "%";
-                    if (values.change[0] == "+") {
-                        changeColor = values.change.green
-                    } else {
-                        changeColor = values.change.red
-                    }
+                    if (values.change[0] == "+")
+                        changeColor = values.change.green;
+                    else
+                        changeColor = values.change.red;
                     if (values.name == "BTC") {
                         if (process.argv[2] == "full" || process.argv[2] == "full-hide") {
                             console.log("BTC   / $" + parseFloat(values.usd).toFixed(8 - parseInt(values.usd).toString().length) + " /  " + (values.qty / btcValue * 100).toFixed(2) + "%  / " + changeColor);
                         }
                     } else {
                         if (process.argv[2] == "full" || process.argv[2] == "full-hide") {
-                            if ((values.btcQty / btcValue * 100).toFixed(2) < 10) {
+                            if ((values.btcQty / btcValue * 100).toFixed(2) < 10)
                                 console.log(values.name + "   / " + values.last + " /  0" + (values.btcQty / btcValue * 100).toFixed(2) + "%  / " + changeColor)
-                            } else {
+                            else
                                 console.log(values.name + "   / " + values.last + " /  " + (values.btcQty / btcValue * 100).toFixed(2) + "%  / " + changeColor)
-                            }
                         }
                     }
                 })
                 values.forEach(values => {
                     values.change = values.change.slice(0, -1);
-                    if (values.name != "BTC") {
+                    if (values.name != "BTC")
                         allChange += (values.change * (values.btcQty / btcValue));
-                    }
                 });
                 console.log("----------")
                 let portChange = (allChange).toFixed(2);
                 let usdVal = (usdValue / 1000).toFixed(2);
-                if (Math.abs(portChange) < 10) {
+                if (Math.abs(portChange) < 10)
                     portChange = "0" + Math.abs(portChange).toFixed(2);
-                }
                 if (portChange > 0) {
                     portChange = "+" + portChange + "%"
                     portChange = portChange.green
@@ -103,11 +97,10 @@ getPrices = (coins) => {
                     portChange = "-" + portChange + "%"
                     portChange = portChange.red
                 }
-                if (process.argv[2] == "full-hide") {
+                if (process.argv[2] == "full-hide")
                     console.log("Total /        HIDDEN         / " + portChange);
-                } else {
+                else
                     console.log("Total / " + btcValue.toFixed(9 - parseInt(btcValue).toString().length) + " / $" + usdVal + "K" + " / " + portChange);
-                }
             })
         })
     })
