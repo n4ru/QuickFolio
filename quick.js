@@ -57,8 +57,12 @@ getPrices = (coins) => {
                 }).forEach(values => {
                     values.change = Number(values.change).toFixed(2);
                     let changeColor = null;
-                    if (Math.abs(values.change) < 10)
-                        values.change = "0" + Math.abs(values.change).toFixed(2);
+                    if (Math.abs(values.change) < 10) {
+                        if (values.change.toString()[0] == "-")
+                            values.change = "-0" + Math.abs(values.change).toFixed(2);
+                        else
+                            values.change = "0" + Math.abs(values.change).toFixed(2);
+                    }
                     if (values.change > 0)
                         values.change = "+" + values.change;
                     values.change += "%";
