@@ -1,0 +1,19 @@
+{
+  "name": "quickfolio",
+  "version": "1.0.0",
+  "description": "A quick and dirty blockfolio clone written in node.",
+  "main": "quick.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/n4ru/QuickFolio.git"
+  },
+  "author": "n4ru <admin@n4ru.it>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/n4ru/QuickFolio/issues"
+  },
+  "homepage": "https://github.com/n4ru/QuickFolio#readme"
+}
