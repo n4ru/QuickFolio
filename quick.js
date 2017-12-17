@@ -90,7 +90,7 @@ getPrices = (coins) => {
                     }
                 });
                 console.log("----------")
-                let portChange = (allChange / btcValue).toFixed(2);
+                let portChange = (allChange).toFixed(2);
                 let usdVal = (usdValue / 1000).toFixed(2);
                 if (Math.abs(portChange) < 10) {
                     portChange = "0" + Math.abs(portChange).toFixed(2);
