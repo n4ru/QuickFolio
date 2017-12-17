@@ -15,7 +15,7 @@ A quick and dirty blockfolio clone written in node.
         "ETH": {
             "qty": 5
         },
-        "LTC" {
+        "LTC": {
             "qty": 10
         }
     }
