@@ -77,7 +77,6 @@ getPrices = (coins) => {
                         if (process.argv[2] == "full" || process.argv[2] == "full-hide") {
                             if ((values.btcQty / btcValue * 100).toFixed(2) < 10) {
                                 console.log(values.name + "   / " + values.last + " /  0" + (values.btcQty / btcValue * 100).toFixed(2) + "%  / " + changeColor)
-
                             } else {
                                 console.log(values.name + "   / " + values.last + " /  " + (values.btcQty / btcValue * 100).toFixed(2) + "%  / " + changeColor)
                             }
