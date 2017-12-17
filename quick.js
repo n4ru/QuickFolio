@@ -106,7 +106,7 @@ getPrices = (coins) => {
                 if (process.argv[2] == "full-hide") {
                     console.log("Total /        HIDDEN         / " + portChange);
                 } else {
-                    console.log("Total / " + btcValue.toFixed(8) + " / $" + usdVal + "K" + " / " + portChange);
+                    console.log("Total / " + btcValue.toFixed(9 - parseInt(btcValue).toString().length) + " / $" + usdVal + "K" + " / " + portChange);
                 }
             })
         })
