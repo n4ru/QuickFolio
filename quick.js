@@ -91,13 +91,13 @@ getPrices = (coins) => {
                 console.log("----------")
                 let portChange = (allChange).toFixed(2);
                 let usdVal = (usdValue / 1000).toFixed(2);
-                if (Math.abs(portChange) < 10)
+                if (Math.abs(portChange) < 10 && portChange > 0) {
                     portChange = "0" + Math.abs(portChange).toFixed(2);
-                if (portChange > 0) {
                     portChange = "+" + portChange + "%"
                     portChange = portChange.green
                 }
-                if (portChange < 0) {
+                if (Math.abs(portChange) < 10 && portChange < 0) {
+                    portChange = "0" + Math.abs(portChange).toFixed(2);
                     portChange = "-" + portChange + "%"
                     portChange = portChange.red
                 }
